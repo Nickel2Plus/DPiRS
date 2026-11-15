@@ -30,6 +30,7 @@ MMDVMホットスポットボード（MMDVM_HS / ADF7021）で、**誰でも**�
 - 位置を **NMEA形式**（`$GPRMC` など）で送る設定の無線機は未対応です（受信してログには出ますが、APRS-ISには送りません）。D-PRS形式に設定してください。
 - **送信はしません。** 応答（ACK）や、受信できたかの返答もありません。
 - MMDVMHost / Pi-Star などと同じボードを同時に使うことはできません。
+- GPIO接続の場合、Bluetoothが使用できなくなります。
 
 ## かんたんインストール（Raspberry Pi OS Bookworm 以降）
 
@@ -64,6 +65,7 @@ RX MY='XXXXXX  '/'ID31' UR='CQCQCQ  ' ...
 D-PRS [CRC OK]: $$CRC....,XXXXXX>API31,DSTAR*:!....
   [gate] DRY-RUN: XXXXXX>API31,DSTAR*,qAR,YOURCALL-10:!....
 ```
+もしログが表示されない場合は、`sudo systemctl restart dpirs`でサービスを再起動させてください。 
 
 ### APRS-ISへ送出する（位置が公開されます）
 
@@ -119,7 +121,7 @@ sudo systemctl restart dpirs
 | `/dev/serial0` がない | UART未設定。`./install.sh` を実行して再起動 |
 | `GET_VERSION` に応答がない／`multiple access` | シリアルコンソール（`agetty`）などがポートを使っている。`install.sh` を再実行して再起動 |
 | Permission denied | `sudo usermod -aG dialout $USER` を実行し、再ログイン |
-| 何も受信できない | 無線機の設定を確認。出力を下げて距離をとる。`rx_invert = yes` を試す。周波数のずれは `frequency_offset` で補正 |
+| 何も受信できない | 無線機の設定を確認。出力を下げて距離をとる。`rx_invert = yes` を試す。周波数のずれは `frequency_offset` で補正。`sudo systemctl restart dpirs`でサービスを再起動|
 | `CRC NG` が出る | 受信の取りこぼし。送信を長めに、近い距離で |
 | `login was not verified` | コールサイン／パスコードを確認 |
 | 手動実行で `multiple access` | サービスが動作中です。`sudo systemctl stop dpirs` で止めてから実行し、終わったら `sudo systemctl start dpirs` |

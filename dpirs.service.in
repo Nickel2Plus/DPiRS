@@ -1,0 +1,20 @@
+[Unit]
+Description=DPiRS - receive-only D-STAR D-PRS i-Gate
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=@USER@
+SupplementaryGroups=dialout
+WorkingDirectory=@DIR@
+ExecStart=/usr/bin/python3 -u @DIR@/dpirs.py -c @DIR@/config.ini
+Restart=always
+RestartSec=5
+# exit code 78 = configuration error: do not restart in a loop
+RestartPreventExitStatus=78
+NoNewPrivileges=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -157,6 +157,6 @@ Tests use synthetic data only; no radio or network needed.
 
 ## License
 
-GNU General Public License v3.0 ([LICENSE](LICENSE))
+GNU General Public License v3.0 only ([LICENSE](LICENSE))
 
 Copyright (C) 2026 JQ7EAH (GitHub: Nickel2Plus)
